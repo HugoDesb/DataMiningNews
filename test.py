@@ -5,6 +5,7 @@ import nltk
 fname = "res/all-the-news/articles2.csv"
 csvfile = open(fname, "r")
 csv.field_size_limit(sys.maxsize)
+dico = dict()
 
 try:
     reader = csv.reader(csvfile, delimiter=',')
@@ -14,7 +15,12 @@ try:
         tagged = nltk.pos_tag(tokens)
         for token in tagged:
             if token[1] == "NN":
-                print(token[0])
+                if token[0] in dico.keys():
+                    dico[token[0]] += 1
+                else:
+                    dico[token[0]] = 1
+        print(dico)
+
 finally:
     csvfile.close()
 
